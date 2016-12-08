@@ -56,29 +56,32 @@
                 
         var options =  $.extend(true, defaults, options);
         
-        if (!isNaN($(this).data('limit')))
-        {
-            options.char_limit = $(this).data('limit');
-        }
-        
-        if (true === $(this).data('force_limit') || false === $(this).data('force_limit'))
-        {
-            options.force = $(this).data('force_limit');
-        }
+		return this.each(function() {
+            var this_options = options;
+            
+            if (!isNaN($(this).data('limit')))
+            {
+                this_options.char_limit = $(this).data('limit');
+            }
 
-        if ($(this).data('climiterInit') === true)
-        {
-            var climiterInst = $(this).data('climiter');
-        }
-        else
-        {
-            $(this).data('climiterInit', true);
-            var climiterInst = new climiter();
-            $(this).data('climiter', climiterInst);
-        }
+            if (true === $(this).data('force_limit') || false === $(this).data('force_limit'))
+            {
+                this_options.force = $(this).data('force_limit');
+            }
 
-        climiterInst.init($(this), options);
-
-        return climiterInst;
+            if ($(this).data('climiterInit') === true)
+            {
+                var climiterInst = $(this).data('climiter');
+            }
+            else
+            {
+                $(this).data('climiterInit', true);
+                var climiterInst = new climiter();
+                $(this).data('climiter', climiterInst);
+                climiterInst.init($(this), options);
+            }
+            
+            return climiterInst;
+		});
     };
 })(jQuery);
